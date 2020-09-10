@@ -6,7 +6,7 @@ Transfer System)](https://en.wikipedia.org/wiki/FITS) into Tensorflow 2.x's
 your fits file can have multiple extensions). My plan was to have it work 
 like Tensorflow's built in functions to read images.
 
-The function requires a byte stringof your FITS file, which can be got from 
+The function requires a byte string of your FITS file, which can be got from 
 Tensorflow's `tf.io.read_file(file_path)` function.
 
 The returned image shape will be the same as the image in the FITS (i.e. 2D 
@@ -27,6 +27,9 @@ header = 0
 img = tf.io.read_file(fits_file)
 img = image_decode_fits(img, header)
 ```
+
+If you use this code in a publication, shoot me a message (but don't feel 
+obliged). I'm curois what people may use it for.
 
 (Potential) Issues
 ==================
