@@ -29,7 +29,7 @@ img = image_decode_fits(img, header)
 ```
 
 If you use this code in a publication, shoot me a message (but don't feel 
-obliged). I'm curois what people may use it for.
+obliged). I'm curious what people may use it for.
 
 (Potential) Issues
 ==================
