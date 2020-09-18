@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="tf_fits",
+    name="tf-fits",
     version="0.6.0",
     author="Willaim J. Pearson",
     author_email="willjamespearson@gmail.com",
