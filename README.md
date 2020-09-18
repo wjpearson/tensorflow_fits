@@ -31,7 +31,7 @@ Usage
 =====
 FITS images:
 ```python
-from tf_fits import image_decode_fits
+from tf_fits.image import image_decode_fits
 
 fits_file = '/path/to/fits/file.fits'
 header = 0
@@ -42,7 +42,7 @@ img = image_decode_fits(img, header)
 
 FITS binary tables:
 ```python
-from tf_fits import bintable_decode_fits
+from tf_fits.bintable import bintable_decode_fits
 
 fits_file = '/path/to/fits/file.fits'
 header = 1
