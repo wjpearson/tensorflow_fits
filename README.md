@@ -27,6 +27,13 @@ returned from this script will be tf.float32. If you have double-precision
 values, there may be loss of data. There will also be loss of data for 
 non-real numbers in tables (see above).
 
+INSTALLING
+==========
+Clone this repo: `https://github.com/wjpearson/tensorflow_fits.git`
+cd into the folder: `cd tensorflow_fits`
+install with pip (reccomended): `pip install .`
+or install with python: `python3 setup.py install`
+
 Usage
 =====
 FITS images:
