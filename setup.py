@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tf-fits",
-    version="0.6.1",
+    version="0.7.0",
     author="Willaim J. Pearson",
     author_email="willjamespearson@gmail.com",
     license="Apache-2.0",

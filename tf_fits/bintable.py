@@ -1,6 +1,7 @@
 import tensorflow as tf
-from .bintable_functions.tf_fits_bintable_header import _hdu_bintable_condition, _hdu_bintable_body
-from .bintable_functions.tf_fits_bintable_data import _bintable_column_condition, _bintable_column_body
+from .common_functions.tf_fits_header import _hdu_condition, _hdu_body
+from .table_functions.tf_fits_bintable_header import _read_TFORM_condition, _read_TFORM_body
+from .table_functions.tf_fits_bintable_data import _bintable_column_condition, _bintable_column_body
 
 @tf.function
 def bintable_decode_fits(fits_data, header=1):
@@ -22,11 +23,9 @@ def bintable_decode_fits(fits_data, header=1):
     fixed_length = 0
     bitpix = 0
     shape = tf.TensorArray(dtype=tf.int32, size=0, dynamic_size=True, clear_after_read=False, name='shape')
-    TFIELDS = 0
-    TFORM = tf.TensorArray(dtype=tf.int32, size=0, dynamic_size=True, clear_after_read=False, name='TFORM')
     
-    hdu_loop = tf.while_loop(_hdu_bintable_condition, _hdu_bintable_body,
-                             [fits_data, h, header, offset, start, true_length, fixed_length, bitpix, shape, TFIELDS, TFORM],
+    hdu_loop = tf.while_loop(_hdu_condition, _hdu_body,
+                             [fits_data, h, header, offset, start, true_length, fixed_length, bitpix, shape],
                               shape_invariants=[None,
                                                 h.get_shape(),
                                                 h.get_shape(),
@@ -35,11 +34,23 @@ def bintable_decode_fits(fits_data, header=1):
                                                 h.get_shape(),
                                                 h.get_shape(),
                                                 h.get_shape(),
-                                                tf.TensorShape(None),
-                                                h.get_shape(),
-                                                tf.TensorShape(None)],
-                             name='hdu_loop')
-    _, _, _, offset, start, true_length, fixed_length, _, shape, TFIELDS, TFORM = hdu_loop
+                                                tf.TensorShape(None)])
+    _, _, _, offset, start, true_length, fixed_length, bitpix, shape = hdu_loop
+    
+    i = tf.constant(0)
+    TFIELDS = 0
+    TFORM = tf.TensorArray(dtype=tf.int32, size=0, dynamic_size=True, clear_after_read=False, name='TFORM')
+    string = tf.strings.substr(fits_data, offset, 80)
+    
+    tform_loop = tf.while_loop(_read_TFORM_condition, _read_TFORM_body,
+                               [fits_data, offset, i, string, TFIELDS, TFORM],
+                               shape_invariants=[None,
+                                                 h.get_shape(),
+                                                 h.get_shape(),
+                                                 None,
+                                                 h.get_shape(),
+                                                 None])
+    _, _, _, _, TFIELDS, TFORM = tform_loop
     
     #Get btye data for the chosen header
     byte_data = tf.strings.substr(fits_data, offset+start, fixed_length)

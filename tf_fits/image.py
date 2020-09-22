@@ -1,5 +1,5 @@
 import tensorflow as tf
-from .image_functions.tf_fits_image_header import _hdu_image_condition, _hdu_image_body
+from .common_functions.tf_fits_header import _hdu_condition, _hdu_body
 
 @tf.function
 def image_decode_fits(fits_data, header):
@@ -17,7 +17,7 @@ def image_decode_fits(fits_data, header):
     bitpix = 0
     shape = tf.TensorArray(dtype=tf.int32, size=0, dynamic_size=True, clear_after_read=False, name='shape')
     
-    hdu_loop = tf.while_loop(_hdu_image_condition, _hdu_image_body,
+    hdu_loop = tf.while_loop(_hdu_condition, _hdu_body,
                              [fits_data, h, header, offset, start, true_length, fixed_length, bitpix, shape],
                               shape_invariants=[None,
                                                 h.get_shape(),

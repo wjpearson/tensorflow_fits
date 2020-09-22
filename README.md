@@ -29,7 +29,7 @@ non-real numbers in tables (see above).
 
 INSTALLING
 ==========
-Clone this repo: `https://github.com/wjpearson/tensorflow_fits.git`  
+Clone this repo: `git clone https://github.com/wjpearson/tensorflow_fits.git`  
 cd into the folder: `cd tensorflow_fits`  
 install with pip (reccomended): `pip install .`  
 or install with python: `python3 setup.py install`
