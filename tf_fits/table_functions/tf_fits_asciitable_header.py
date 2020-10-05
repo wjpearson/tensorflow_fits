@@ -9,7 +9,7 @@ def _TFORM_bitpix(TFORMn):
     
     bitpix = 0
     if tf.strings.regex_full_match(TFORMn, b'A'):
-        bitpix = 32
+        bitpix = 8
     elif tf.strings.regex_full_match(TFORMn, b'I'):
         bitpix = 32
     elif tf.strings.regex_full_match(TFORMn, b'F'):

@@ -91,7 +91,10 @@ def _asciitable_column_data_body(j, NAXIS1, TFIELDS, byte_data, colm_start, fixe
     #Decode cell data
     #Done cell-by-cell or the DMA string copy error occurs
     cell_data = tf.strings.substr(byte_data, colm_start, numtyp)
-    if tf.math.equal(bitpix, 32):
+    if tf.math.equal(bitpix, 8):
+        rcvd_data = tf.io.decode_raw(cell_data, tf.uint8, False)
+        rcvd_data = tf.cast(rcvd_data, tf.float32)
+    elif tf.math.equal(bitpix, 32):
         rcvd_data = tf.strings.to_number(cell_data, tf.int32)
         rcvd_data = tf.cast(rcvd_data, tf.float32)
     elif tf.math.equal(bitpix, -32):
