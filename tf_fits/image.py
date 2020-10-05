@@ -51,6 +51,12 @@ def image_decode_fits(fits_data, header):
         rcvd_data = tf.io.decode_raw(byte_data, tf.float64, False, fixed_length)
         rcvd_data = tf.cast(rcvd_data, tf.float32)
         
+    #Swap  the first two axes
+    ax0 = shape.read(0)
+    ax1 = shape.read(1)
+    shape = shape.write(0, ax1)
+    shape = shape.write(1, ax0)
+    
     #Reshape the data
     shape = shape.stack()
     img_data = tf.reshape(rcvd_data, shape)

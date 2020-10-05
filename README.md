@@ -22,6 +22,11 @@ returned as the first value in the array. For example, columns of data type
 array. Non-single-precision floating point values will also be converted to
 single-precision floating points.
 
+The returned ascii table will have the same number of rows and columns as the 
+ascii table in the FITS. HOWEVER, data types will not always be conserved. 
+Character strings ('A') will be converted into float32 due to the way 
+Tensorflow seems to want to work.
+
 As Tensorflow requires these functions to have a known return type, the data
 returned from this script will be tf.float32. If you have double-precision 
 values, there may be loss of data. There will also be loss of data for 
@@ -38,6 +43,7 @@ Usage
 =====
 FITS images:
 ```python
+import tensorflow as tf
 from tf_fits.image import image_decode_fits
 
 fits_file = '/path/to/fits/file.fits'
@@ -49,13 +55,26 @@ img = image_decode_fits(img, header)
 
 FITS binary tables:
 ```python
+import tensorflow as tf
 from tf_fits.bintable import bintable_decode_fits
 
 fits_file = '/path/to/fits/file.fits'
 header = 1
 
 tbl = tf.io.read_file(fits_file)
-tbl = image_decode_fits(tbl, header)
+tbl = bintable_decode_fits(tbl, header)
+```
+
+FITS ascii tables:
+```python
+import tensorflow as tf
+from tf_fits.asciitable import asciitable_decode_fits
+
+fits_file = '/path/to/fits/file.fits'
+header = 1
+
+tbl = tf.io.read_file(fits_file)
+tbl = asciitable_decode_fits(tbl, header)
 ```
 
 If you use this code in a publication, shoot me a message (but don't feel 
@@ -74,11 +93,12 @@ in the array). This is due to Tensorflow wanting arrays of a single data type
 and my assumption that people will use bools, real numbers or split complex 
 numbers into separate real and imaginary parts inside Tensorflow.
 
-Reading binary tables is slow...
+Data types in ascii tables may be lost. Characters 'A' are not processed 
+properly. It will convert these data into integers.This is due to Tensorflow 
+wanting arrays of a single data type and my assumption that people will not 
+be using characters (or strings) inside Tensorflow.
+
+Reading tables is slow...
 
 Does not check the HDU actually contains the requested XTENSION type (IMAGE or 
 BINTABLE)
-
-To Do
-=====
-ASCIITABLE support
