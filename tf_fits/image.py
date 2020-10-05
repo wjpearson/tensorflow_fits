@@ -3,11 +3,21 @@ from .common_functions.tf_fits_header import _hdu_condition, _hdu_body
 
 @tf.function
 def image_decode_fits(fits_data, header):
-    '''Function to decode fits images
-       fits_data - byte string of data (from tf.io.read_file(file_path))
-       header - header to return
-       
-       returns tf.Tensor with dtype tf.float32 of image data'''
+    """
+    Function to decode fits binary table
+    
+    Parameters
+    ----------
+    fits_data : byte string
+                byte string of data (from `tf.io.read_file(file_path)`)
+    header : int
+             header to return
+    
+    Returns
+    -------
+    img_data : tf.Tensor
+               tf.Tensor with dtype `tf.float32` of image data
+    """
     
     h = tf.constant(0)
     offset = 0 #Position of start of HDU

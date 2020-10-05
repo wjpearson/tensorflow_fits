@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tf-fits",
-    version="0.7.0",
+    version="1.0.0",
     author="Willaim J. Pearson",
     author_email="willjamespearson@gmail.com",
     license="Apache-2.0",
@@ -24,5 +24,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
                 ],
     python_requires='>=3.5',
-    install_requires=['tensorflow>=2.0'],
+    install_requires=['tensorflow>=2.0', 'numpy'],
 )

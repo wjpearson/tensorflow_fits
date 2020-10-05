@@ -5,15 +5,27 @@ from .table_functions.tf_fits_asciitable_data import _asciitable_column_conditio
 
 @tf.function
 def asciitable_decode_fits(fits_data, header=1):
-    '''Function to decode fits asciitable
-       fits_data - byte string of data (from tf.io.read_file(file_path))
-       header - header to return
-       
-       returns tf.Tensor with dtype tf.float32 of table data'''
+    """
+    Function to decode fits ascii table
     
-    """WARNING - WILL MANGLE STRINGS"""
+    Parameters
+    ----------
+    fits_data : byte string
+                byte string of data (from `tf.io.read_file(file_path)`)
+    header : int
+             header to return
     
-    '''As Tensorflow wants a single data type returned, strings will be mangled.'''
+    Returns
+    -------
+    table_data : tf.Tensor
+                 tf.Tensor with dtype `tf.float32` of table data
+    
+    WARNING
+    -------
+    WILL MANGLE ANYTHING THAT IS NOT A PURE REAL NUMBER OR BOOL
+    
+    As Tensorflow wants a single data type returned, strings, complex numbers,
+    arrays of numbers will be mangled."""
     
     h = tf.constant(0)
     offset = 0 #Position of start of HDU

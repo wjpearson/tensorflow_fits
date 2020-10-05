@@ -4,7 +4,6 @@ from tf_fits.image import image_decode_fits
 from tf_fits.bintable import bintable_decode_fits
 from tf_fits.asciitable import asciitable_decode_fits
 
-import pytest
 import os
 
 __all__ = ['runall']
