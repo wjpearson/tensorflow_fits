@@ -15,7 +15,7 @@ setuptools.setup(
     url="https://github.com/wjpearson/tensorflow_fits",
     packages=setuptools.find_packages(),
     classifiers=[
-        "License :: OSI Approved :: Apache-2.0 License",
+        "License :: OSI Approved :: Apache Software License",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
@@ -24,5 +24,5 @@ setuptools.setup(
         "Operating System :: OS Independent",
                 ],
     python_requires='>=3.5',
-    install_requires=['tensorflow>=2.0', 'numpy'],
+    install_requires=['tensorflow>=2.0.0a0'],
 )

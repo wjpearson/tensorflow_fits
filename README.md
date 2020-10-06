@@ -2,9 +2,9 @@ Tensorflow 2.x FITS
 ===================
 This repo contains python scripts to load data from [FITS (Flexible Image 
 Transfer System)](https://en.wikipedia.org/wiki/FITS) into Tensorflow 2.x's 
-`tf.data.Dataset`. It currently will load images or binary tables from a 
-specified HDU (i.e. your fits file can have multiple extensions). My plan was 
-to have it work like Tensorflow's built in functions to read images.
+`tf.data.Dataset`. It currently will load images, binary tables or ascii tables 
+from a specified HDU (i.e. your fits file can have multiple extensions). My 
+plan was to have it work like Tensorflow's built in functions to read images.
 
 The functions require a byte string of your FITS file, which can be generated 
 from Tensorflow's `tf.io.read_file(file_path)` function.
@@ -34,10 +34,21 @@ non-real numbers in tables (see above).
 
 INSTALLING
 ==========
+Install with pip: `pip install tf-fits`
+
+Of if you prefer to install from source:
 Clone this repo: `git clone https://github.com/wjpearson/tensorflow_fits.git`  
 cd into the folder: `cd tensorflow_fits`  
 install with pip (reccomended): `pip install .`  
 or install with python: `python3 setup.py install`
+
+**Testing Installation**
+If you cloned the repo and have `pytest` installed, you can run `pytest` from 
+the tensorflow_fits folder. If you do not, you can run:
+
+```bash
+python -c "from tf_fits.test.test_tf_fits import runall; runall()"
+```
 
 Usage
 =====
@@ -94,11 +105,11 @@ and my assumption that people will use bools, real numbers or split complex
 numbers into separate real and imaginary parts inside Tensorflow.
 
 Data types in ascii tables may be lost. Characters 'A' are not processed 
-properly. It will convert these data into integers.This is due to Tensorflow 
+properly. It will convert these data into integers. This is due to Tensorflow 
 wanting arrays of a single data type and my assumption that people will not 
 be using characters (or strings) inside Tensorflow.
 
 Reading tables is slow...
 
-Does not check the HDU actually contains the requested XTENSION type (IMAGE or 
-BINTABLE)
+Does not check the HDU actually contains the requested XTENSION type (IMAGE, 
+BINTABLE or TABLE)

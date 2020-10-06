@@ -1,6 +1,12 @@
 Installation
 ============
 
+Tensorflow 2.x FITS can be installed with pip:
+
+.. code:: bash
+
+    pip install tf-fits
+
 Tensorflow 2.x FITS can be installed from source. Download the latest release 
 from the `GitHub repository <https://github.com/wjpearson/tensorflow_fits>`_ 
 and extract the contents from the zip file. Or clone the repo:
@@ -22,11 +28,12 @@ or python:
     python3 setup.py install
 
 **Test the installation**
-If you have ``pytest`` installed, you can run
+
+If you installed from source and have ``pytest`` installed, you can run
 
 .. code:: bash
 
-    pyttest
+    pytest
 
 from the root directory. Alternativly, you can run:
 
