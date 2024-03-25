@@ -35,7 +35,7 @@ def _bintable_column_body(r, NAXIS1, NAXIS2, TFIELDS, byte_data, start, fixed_le
     j = tf.constant(0)
     bitpix = tf.slice(TFORMn, [0], [1])
     numtyp = tf.slice(TFORMn, [1], [1])
-    
+        
     #Get data through tf.strided_slice
     colm_data = tf.TensorArray(dtype=tf.float32, size=0, dynamic_size=True, name='colm_data')
     colm_start = start
@@ -87,9 +87,13 @@ def _bintable_column_data_body(j, NAXIS1, TFIELDS, byte_data, colm_start, fixed_
        colm_data - Tensor of column data'''
     
     length = tf.cast(abs(bitpix)//8, tf.int32)
+    if tf.shape(tf.shape(colm_start))[0] == 1:
+        colm_start = colm_start[0]
+    if tf.shape(tf.shape(length))[0] == 1:
+        length = length[0]
     
     #Decode cell data
-    #Done cell-by-cell or the DMA string copy error occurs
+    #Done cell-by-cell or the DMA string copy error occurs    
     cell_data = tf.strings.substr(byte_data, colm_start, length)
     if tf.math.equal(bitpix, 8):
         rcvd_data = tf.io.decode_raw(cell_data, tf.uint8, False)
